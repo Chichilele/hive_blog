@@ -1,5 +1,9 @@
+from typing import Union
+
+from flask import flash, redirect, render_template, request, url_for
+from flask.wrappers import Response
+
 from app import flask_app
-from flask import render_template, request, flash, redirect, url_for
 from app.forms import LoginForm
 
 
@@ -15,7 +19,7 @@ def index() -> str:
 
 
 @flask_app.route("/login", methods=["GET", "POST"])
-def login() -> str:
+def login() -> Union[str, Response]:
     form = LoginForm()
     if form.validate_on_submit():
         flash(
