@@ -1,2 +1,5 @@
-FLASK_APP=microblog.py
+FLASK_APP=hive.py
+FLASK_SECRET_KEY=s3cR373-k8y
+FLASK_DEBUG=True
 
+#DATABASE_URL=
