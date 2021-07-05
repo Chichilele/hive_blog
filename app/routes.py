@@ -3,12 +3,11 @@ from flask import render_template, request
 
 
 @app.route("/")
-def home():
-    user = {"username": "G"}
-    return render_template("index.html", title=request.endpoint, user=user)
-
-
 @app.route("/index")
 def index():
     user = {"username": "G"}
-    return render_template("index.html", title=request.endpoint, user=user)
+    posts = [
+        {"author": {"username": "Magic E"}, "body": "Gig review!"},
+        {"author": {"username": "HM Anibal Michael"}, "body": "Release day!"},
+    ]
+    return render_template("index.html", title=request.endpoint, user=user, posts=posts)
