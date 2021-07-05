@@ -1,5 +1,5 @@
 from hive import flask_app
-from flask import render_template, request, flash, url_for
+from flask import render_template, request, flash, redirect, url_for
 from hive.forms import LoginForm
 
 
@@ -21,5 +21,5 @@ def login():
         flash(
             f"Login requested for user: {form.username.data}, remember_me={form.remember_me.data}"
         )
-        return url_for("index")
+        return redirect(url_for("index"))
     return render_template("login.html", title="Sign In", form=form)
