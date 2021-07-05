@@ -5,7 +5,7 @@ from hive.forms import LoginForm
 
 @flask_app.route("/")
 @flask_app.route("/index")
-def index():
+def index() -> str:
     user = {"username": "G"}
     posts = [
         {"author": {"username": "Magic E"}, "body": "Gig review!"},
@@ -15,7 +15,7 @@ def index():
 
 
 @flask_app.route("/login", methods=["GET", "POST"])
-def login():
+def login() -> str:
     form = LoginForm()
     if form.validate_on_submit():
         flash(
