@@ -1,5 +1,5 @@
-from hive import flask_app, db
-from hive.models import User, Post
+from app import flask_app, db
+from app.models import User, Post
 
 
 @flask_app.shell_context_processor

@@ -1,5 +1,5 @@
 from datetime import datetime
-from hive import db
+from app import db
 
 
 class User(db.Model):

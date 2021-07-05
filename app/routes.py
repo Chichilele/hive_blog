@@ -1,6 +1,6 @@
-from hive import flask_app
+from app import flask_app
 from flask import render_template, request, flash, redirect, url_for
-from hive.forms import LoginForm
+from app.forms import LoginForm
 
 
 @flask_app.route("/")
