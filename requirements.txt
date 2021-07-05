@@ -2,3 +2,5 @@ flask
 flask-wtf
 python-dotenv
 wheel
+flask-sqlalchemy
+flask-migrate
