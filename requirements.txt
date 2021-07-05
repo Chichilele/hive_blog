@@ -1,4 +1,4 @@
 flask
-wheel
+flask-wtf
 python-dotenv
-
+wheel
