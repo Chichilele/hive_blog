@@ -10,6 +10,11 @@ from app.forms import LoginForm
 @flask_app.route("/")
 @flask_app.route("/index")
 def index() -> str:
+    """Index view
+
+    Returns:
+        str: rendered index.html template
+    """
     user = {"username": "G"}
     posts = [
         {"author": {"username": "Magic E"}, "body": "Gig review!"},
@@ -20,6 +25,11 @@ def index() -> str:
 
 @flask_app.route("/login", methods=["GET", "POST"])
 def login() -> Union[str, Response]:
+    """Login view and controller. Logs in the user or returns the index view if already logged in.
+
+    Returns:
+        Union[str, Response]: index view if logged in, login view otherwise
+    """
     form = LoginForm()
     if form.validate_on_submit():
         flash(
