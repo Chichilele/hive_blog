@@ -4,3 +4,4 @@ python-dotenv
 wheel
 flask-sqlalchemy
 flask-migrate
+flask-login
