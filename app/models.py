@@ -1,4 +1,6 @@
 from datetime import datetime
+from hashlib import md5
+
 from app import db
 from app import login
 
@@ -35,6 +37,18 @@ class User(UserMixin, db.Model):
             bool: True if password matches, false otherwise.
         """
         return check_password_hash(self.password_hash, password)
+
+    def avatar(self, size: int) -> str:
+        """Build gravatar image url.
+
+        Args:
+            size (int): size of the gratavar icon.
+
+        Returns:
+            str: url of the gravatar image.
+        """
+        digest = md5(self.email.lower().encode("utf-8")).hexdigest()
+        return f"https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}"
 
 
 class Post(db.Model):
