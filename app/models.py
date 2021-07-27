@@ -48,13 +48,13 @@ class Post(db.Model):
 
 
 @login.user_loader
-def load_user(id: int) -> User:
+def load_user(user_id: int) -> User:
     """User loader for flask_login.
 
     Args:
-        id (int): User primary id.
+        user_id (int): User primary id.
 
     Returns:
         User: User instance.
     """
-    return User.query.get(id)
+    return User.query.get(user_id)
