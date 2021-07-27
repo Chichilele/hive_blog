@@ -1,6 +1,7 @@
 from typing import Union
 
 from flask import flash, redirect, render_template, request, url_for
+from werkzeug.urls import url_parse
 from flask.wrappers import Response
 from flask_login import current_user, login_user, login_required, logout_user
 
@@ -13,19 +14,16 @@ from app.models import User
 @flask_app.route("/index")
 @login_required
 def index() -> str:
-    """Index view
+    """Index view.
 
     Returns:
         str: rendered index.html template
     """
-    # user = {"username": "G"}
     posts = [
         {"author": {"username": "Magic E"}, "body": "Gig review!"},
         {"author": {"username": "HM Anibal Michael"}, "body": "Release day!"},
     ]
-    return render_template(
-        "index.html", title=request.endpoint, user=current_user.username, posts=posts
-    )
+    return render_template("index.html", title=request.endpoint, posts=posts)
 
 
 @flask_app.route("/login", methods=["GET", "POST"])
@@ -47,7 +45,10 @@ def login() -> Union[str, Response]:
             return redirect(url_for("login"))
 
         login_user(user, remember=form.remember_me.data)
-        return redirect(url_for("index"))
+        next_page = request.args.get("next")
+        if not next_page or url_parse(next_page).netloc != "":
+            next_page = url_for("index")
+        return redirect(next_page)
     ## GET request
     else:
         return render_template("login.html", title="Sign In", form=form)
