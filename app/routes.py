@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Tuple, Union
 
 from flask import flash, redirect, render_template, request, url_for
@@ -6,7 +7,7 @@ from flask.wrappers import Response
 from flask_login import current_user, login_user, login_required, logout_user
 
 from app import flask_app, db
-from app.forms import LoginForm, RegistrationForm
+from app.forms import EditProfileForm, LoginForm, RegistrationForm
 from app.models import User
 
 
@@ -110,3 +111,38 @@ def user(username: str) -> str:
     ]
 
     return render_template("user.html", user=user, posts=posts)
+
+
+@flask_app.route("/edit_profile", methods=["GET", "POST"])
+@login_required
+def edit_profile() -> Union[Response, str]:
+    """Edit profie view.
+
+    Returns:
+        Union[Response, str]: Redirects to edit_profile view if successful submit. Renders template otherwise
+    """
+    form = EditProfileForm()
+
+    ## POST
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.about_me = form.about_me.data
+        db.session.commit()
+        flash("Your changes have been saved.")
+        return redirect(url_for(f"user", username=current_user.username))
+    ## GET
+    elif request.method == "GET":
+        form.username.data = current_user.username
+        form.about_me.data = current_user.about_me
+    ## POST bad submit
+    else:
+        for field in form.errors.keys():
+            flash(f"Submission error in: {field}")
+    return render_template("edit_profile.html", title="Edit Profile", form=form)
+
+
+@flask_app.before_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.last_seen = datetime.utcnow()
+        db.session.commit()
