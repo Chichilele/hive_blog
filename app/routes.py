@@ -91,7 +91,7 @@ def register() -> Union[Response, str]:
         return render_template("register.html", title="Register", form=form)
 
 
-@flask_app.route("user/<username>")
+@flask_app.route("/user/<username>")
 @login_required
 def user(username: str) -> str:
     """User profile page.
