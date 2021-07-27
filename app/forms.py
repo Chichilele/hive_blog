@@ -18,7 +18,7 @@ class RegistrationForm(FlaskForm):
     password2 = StringField(
         "Repeat Password", validators=[DataRequired(), EqualTo("password")]
     )
-    sumbit = SubmitField("Register")
+    submit = SubmitField("Register")
 
     def validate_username(self, username: str):
         """username custom validator.
