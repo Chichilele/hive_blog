@@ -70,7 +70,7 @@ def register() -> Union[Response, str]:
     """Register view. Registers the user and redirects to login.
 
     Returns:
-        Union[Response, str]: [description]
+        Union[Response, str]: Redirecton to login after having registered. Or registration form on get.
     """
     if current_user.is_authenticated:
         return redirect(url_for("index"))
@@ -89,3 +89,24 @@ def register() -> Union[Response, str]:
     ## GET
     else:
         return render_template("register.html", title="Register", form=form)
+
+
+@flask_app.route("user/<username>")
+@login_required
+def user(username: str) -> str:
+    """User profile page.
+
+    Args:
+        username (str): username of the user page to be loaded.
+
+    Returns:
+        str: profile page.
+    """
+    user = User.query.filter_by(username=username).first_or_404()
+
+    posts = [
+        {"author": user, "body": "Gig review!"},
+        {"author": user, "body": "Release day!"},
+    ]
+
+    return render_template("user.html", user=user, posts=posts)
