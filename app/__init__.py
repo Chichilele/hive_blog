@@ -11,4 +11,4 @@ migrate = Migrate(flask_app, db)
 login = LoginManager(flask_app)
 login.login_view = "login"
 
-from app import models, routes
+from app import models, routes, errors
